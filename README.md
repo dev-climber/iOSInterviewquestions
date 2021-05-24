@@ -4,6 +4,8 @@ from https://github.com/JeaSungLEE/iOSInterviewquestions
 
 ---
 
+1차 PR 테스트입니다. 
+
 iOS개발자들에게 필요한 자료들을 정리하고 있는 중입니다.
 
 면접때 받은 질문이나 공부한내용들
