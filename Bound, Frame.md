@@ -1,0 +1,57 @@
+# Frame과 Bounds의 차이 
+
+Frame과 Bounds는 UIView의 instance property로 둘 다 CGRect이다. 
+
+여기서 CGRect을 간단히 설명하자면 구조체로서 구조체 변수로 CGPoint, CGSize를 갖고 있다. 따라서 자신의 위치(CGPoint)를 갖는 가로와 세로 길이가 존재(CGSize)하는 사각형이다. 여기서 CGPoint는 사각형기준 왼쪽 위의 점을 기준으로 하며 (0, 0) 기준으로 양의 방향은 x축 오른쪽, y축 <u>아래쪽</u>이다.
+
+그렇다면 차이는 무엇일까? 
+
+App 개발자 문서에는 다음과 같이 나와있다. 
+
+<img src="/Users/shhong/Desktop/스크린샷 2021-06-05 오후 5.55.21.png" alt="스크린샷 2021-06-05 오후 5.55.21" style="zoom:50%;" />
+
+Bounds: **자기 자신의 좌표계**에서 해당 view의 위치와 크기를 나타내는 사각형
+
+<img src="/Users/shhong/Library/Application Support/typora-user-images/image-20210605175638277.png" alt="image-20210605175638277" style="zoom:50%;" />
+
+Frame: superview(상위뷰)의 좌표계에서 해당 view의 위치와 크기를 나타내는 사각형
+
+
+
+여기서 드는 의문점은 
+
+1. 자기 자신의 좌표계란 무엇인가?
+2. 상위뷰를 기준으로 위치와 크기를 나타낸다고 했는데 그 위치를 나타내는 값의 크기는 상위뷰의 크기와 상관이 없는가 그와 유사하게 크기 또한 상대적인 수치인가 절대적인 수치인가? 
+
+XCode에서 살펴보자.
+
+```swift
+import UIKit
+
+class ViewController: UIViewController {
+
+    var superView = UIView()
+    var subView = UIView()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.backgroundColor = .red
+        superView.frame = CGRect(x: 25, y: 25, width: 25, height: 25)
+        superView.backgroundColor = .yellow
+        
+        subView.frame = CGRect(x: 25, y: 25, width: 50, height: 50)
+        subView.backgroundColor = .green
+        
+        view.addSubview(superView)
+        superView.addSubview(subView)
+    }
+}
+```
+
+<img src="/Users/shhong/Library/Application Support/typora-user-images/image-20210605191107510.png" alt="image-20210605191107510" style="zoom:25%;" />
+
+위 코드로 알게 된 점은 2번 질문에 관한 것인데 수치는 절대적인 값이다. 만일 view 보다 yellow인 superView의 Size가 더 크다면 화면을 넘어가게 된다. (여기서 화면의 크기는 iPhone 11기준 width: 414, height: 819)
+
+이번에는 bound에 대한 실험을 해보자. 
+
