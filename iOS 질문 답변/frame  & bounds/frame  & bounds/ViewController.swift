@@ -17,8 +17,6 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .red
-        
-        
 
         yelloewView.backgroundColor = .yellow
         greenView.backgroundColor = .green
@@ -29,8 +27,9 @@ class ViewController: UIViewController {
         blackView.frame = CGRect(x: 200, y: 200, width: 50, height: 50)
 
         UIViewPropertyAnimator(duration: 3, curve: .easeOut) {
-//            self.yelloewView.bounds.origin = CGPoint(x: 50, y: 50)
-//            self.greenView.bounds.origin = CGPoint(x: -100, y: -100)
+            self.yelloewView.bounds.origin = CGPoint(x: -50, y: -50) //
+            self.greenView.bounds.origin = CGPoint(x: -100, y: -100) //yellowView에 영향을 받음
+//            self.view.bounds.origin = CGPoint(x: -80, y: -80)
         } .startAnimation()
         
         
@@ -41,8 +40,8 @@ class ViewController: UIViewController {
         yelloewView.addSubview(greenView)
         view.addSubview(blackView)
         
-        print("superView bound의 x, y 좌표 : \(yelloewView.bounds.origin.x), \(yelloewView.bounds.origin.y)")
-        print("subView bound의 x, y 좌표 : \(greenView.bounds.origin.x), \(greenView.bounds.origin.y)")
+        print("yelloewView bound의 x, y 좌표 : \(yelloewView.bounds.origin.x), \(yelloewView.bounds.origin.y)")
+        print("greenView bound의 x, y 좌표 : \(greenView.bounds.origin.x), \(greenView.bounds.origin.y)")
 
     }
     

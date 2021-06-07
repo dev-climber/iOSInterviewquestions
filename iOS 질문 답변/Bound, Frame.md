@@ -55,3 +55,44 @@ class ViewController: UIViewController {
 
 이번에는 bound에 대한 실험을 해보자. 
 
+```swift
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        view.backgroundColor = .red
+
+        yelloewView.backgroundColor = .yellow
+        greenView.backgroundColor = .green
+        blackView.backgroundColor = .black
+
+        yelloewView.frame = CGRect(x: 50, y: 50, width: 200, height: 200)
+        greenView.frame = CGRect(x: 100, y: 100, width: 100, height: 100)
+        blackView.frame = CGRect(x: 200, y: 200, width: 50, height: 50)
+
+        UIViewPropertyAnimator(duration: 3, curve: .easeOut) {
+            self.yelloewView.bounds.origin = CGPoint(x: 50, y: 50) //
+            self.greenView.bounds.origin = CGPoint(x: -100, y: -100) //yellowView에 영향을 받음
+//            self.view.bounds.origin = CGPoint(x: -80, y: -80)
+        } .startAnimation()
+        
+        
+//        view.addSubview(superView)
+//        view.addSubview(subView)
+        
+        view.addSubview(yelloewView)
+        yelloewView.addSubview(greenView)
+        view.addSubview(blackView)
+        
+        print("yelloewView bound의 x, y 좌표 : \(yelloewView.bounds.origin.x), \(yelloewView.bounds.origin.y)") //yelloewView bound의 x, y 좌표 : 50.0, 50.0
+        print("greenView bound의 x, y 좌표 : \(greenView.bounds.origin.x), \(greenView.bounds.origin.y)") //greenView bound의 x, y 좌표 : -100.0, -100.0
+
+    }
+    
+```
+
+<img src="/Users/shhong/Library/Application Support/typora-user-images/image-20210607215203371.png" alt="image-20210607215203371" style="zoom:25%;" />
+
+자기 자신의 좌표계를 사용한다고 해서 superView의 영향을 받지 않는다고 생각했다. 하지만 yellowView의 bound를 바꾸니 그 subView인 greenView가 영향을 받아 움직였다. 마치 greenView의 point는 핀으로 꽂혀있고 yellowView의 point가 (0, 0)에서 (50, 50)으로 바뀌어서 yellowView의 point가 (0, 0)이던 시점의 point를 찾아가는 것처럼 보인다. 이때 blackView는 View의 subView이므로 yellowView bound에는 영향을 받지 않는다. 
+
+
+
